@@ -555,6 +555,9 @@ body.dark .collection-card {
 body.dark .collection-card-head p {
   color: #ccc;
 }
+body.dark .collection-card-head h2{
+  color:  white;
+}
 
 body.dark .collection-features li {
   color: #ddd;
