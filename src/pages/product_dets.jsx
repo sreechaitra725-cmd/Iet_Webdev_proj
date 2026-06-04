@@ -1,17 +1,25 @@
+import { useState,useEffect } from "react";
 import { useParams,Link } from "react-router-dom";
-import ITEMS from "../data/items";
 import Rating from "../components/rating";
 
 const ProductDetails = () => {
 
   const { id } = useParams();
+
+  const[product,FetchProduct]=useState();
+
+  async function get_product() {
+    const response = await fetch(`http://127.0.0.1:8000/Products/${id}`);
+    const data = await response.json();
+    if(data.message)
+    alert(data.message);
+    else
+    FetchProduct(data)}
   
+  useEffect(()=>{get_product()},[id]);
 
-  const product = ITEMS.find(
-    (item) => item.id == id
-  );
-
-  if (!product) {
+  if (!product)
+    {
     return <h1>Product not found</h1>;
   }
 

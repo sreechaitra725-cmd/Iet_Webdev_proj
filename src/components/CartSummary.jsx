@@ -1,13 +1,12 @@
 import { useCart } from "../context/CartContext";
 
 export default function CartSummary() {
-  const { state } = useCart();
+  const { cart } = useCart();
   
 
-  const totalItems = state.cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
 
-  const subtotal = state.cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,0);
+  const subtotal = cart.reduce((sum, item) => sum + item.product.price * item.qty,0);
 
   const deliveryFee  = 5;
 
@@ -26,7 +25,7 @@ export default function CartSummary() {
 
         <div className="flex justify-between">
           <p className="text-gray-600">Total Item</p>
-          <p className="font-semibold">₹{totalItems}</p>
+          <p className="font-semibold">{totalItems}</p>
         </div>
 
 

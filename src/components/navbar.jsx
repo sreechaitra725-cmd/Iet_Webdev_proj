@@ -12,9 +12,9 @@ const NAV_ITEMS = [
   { label: "Contact" , path: "/contact"},
 ];
 const navigate = useNavigate();
-const { state } = useCart();
+const { cart } = useCart();
 
- const totalItems = state.cartItems.reduce((sum, item) => sum + item.quantity,0);
+ const totalItems = cart.reduce((sum, item) => sum + item.qty,0);
 
     return ( 
       <>

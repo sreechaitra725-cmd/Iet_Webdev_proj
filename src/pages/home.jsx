@@ -1,13 +1,22 @@
-import ITEMS from "../data/items";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import Rating from "../components/rating";
 
+
+
 const Home = () => {
+    const[ITEMS,FetchItems]=useState([]);
     const [searchval,Search]=useState("");
     const[category,SetCategory]=useState("All");
     const[price,SetPrice]=useState(0);
+
+    async function get_products() {
+  const response = await fetch("http://127.0.0.1:8000/Products");
+  const data = await response.json();
+  FetchItems(data)}
+
+  useEffect(()=>{get_products()},[]);
 
     const filtered = ITEMS.filter((item)=>{
         const searchmatch = item.name.toLowerCase().includes(searchval.toLowerCase()) 
@@ -21,13 +30,9 @@ const Home = () => {
 }
     );
     
-    const { dispatch } = useCart();
+    const { ADD_TO_CART } = useCart();
 
-    const handleAddToCart = (item) => {
-    dispatch({
-      type: "ADD_TO_CART",
-      payload: item});
-    };
+    
 
     return (
         <>
@@ -92,7 +97,7 @@ const Home = () => {
                          <Rating/>
                         <button
                         className="add-to-cart mt-5 w-full cursor-pointer rounded-se-2xl p-3"
-                        onClick={()=>handleAddToCart(item)}
+                        onClick={()=>ADD_TO_CART(item.id)}
                         >
                         Add To Cart
                         </button>
